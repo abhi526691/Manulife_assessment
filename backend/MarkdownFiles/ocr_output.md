@@ -150,6 +150,7 @@ Crypto/Key "chart".
 
 # 8. Network Security, Segmentation, and Malware Protection
 
+
 8.1 Segmentation. Vendor will segment environments to reduce blast radius (e.g., separate production from non-production, restrict east-west traffic).
 8.2 Remote Administration. Vendor will restrict administrative access through controlled pathways (e.g., bastion hosts, secure jump boxes, ZTNA), with MFA and logging.
 8.3 Malware Protection (EDR/Anti-Malware). Vendor will implement and maintain malware protection controls appropriate to the In-Scope Environment, including: (a) endpoint detection and response (EDR) or anti-malware on all Vendor-managed endpoints used to administer production and on in-scope servers where feasible; (b) automatic signature/agent updates and tamper protection; (c) alerting to security operations for malware detections and suspicious execution; (d) documented response procedures, including isolation/quarantine, eradication, and post-incident review; and (e) periodic verification of agent coverage for in-scope endpoints.

@@ -1,0 +1,181 @@
+{
+    "contract": {
+        "contract_id": "C-2026-REDWOOD-NIMBUS",
+        "title": "Information Security and Technology Risk Addendum",
+        "effective_date": "2026-01-15"
+    },
+    "compliance_requirements": [
+        {
+            "requirement_id": "CR-01",
+            "name": "Password Management"
+        },
+        {
+            "requirement_id": "CR-02",
+            "name": "IT Asset Management"
+        },
+        {
+            "requirement_id": "CR-03",
+            "name": "Security Training & Background Checks"
+        },
+        {
+            "requirement_id": "CR-04",
+            "name": "Data in Transit Encryption"
+        },
+        {
+            "requirement_id": "CR-05",
+            "name": "Network Authentication & Authorization Protocols"
+        }
+    ],
+    "contract_sections": [
+        {
+            "section_id": "6.2",
+            "title": "Access Controls",
+            "block_type": "obligation",
+            "raw_text": "Vendor shall enforce multi-factor authentication for all privileged access to Company Data."
+        },
+        {
+            "section_id": "6.7",
+            "title": "Authentication and Authorization",
+            "block_type": "obligation",
+            "raw_text": "Vendor shall implement role-based access control and unique user identification for system access."
+        },
+        {
+            "section_id": "7.1",
+            "title": "Encryption of Data",
+            "block_type": "obligation",
+            "raw_text": "All Company Data transmitted over public or private networks shall be encrypted using TLS 1.2 or higher."
+        },
+        {
+            "section_id": "8.2",
+            "title": "Administrative Access",
+            "block_type": "obligation",
+            "raw_text": "Administrative access shall be performed through a secure gateway with session logging enabled."
+        },
+        {
+            "section_id": "9.1",
+            "title": "Personnel Security",
+            "block_type": "obligation",
+            "raw_text": "Vendor shall ensure security awareness training for personnel upon hire and annually thereafter, and conduct background checks as permitted by law."
+        }
+    ],
+    "security_controls": [
+        {
+            "control_id": "SC-MFA-01",
+            "control_name": "Multi-Factor Authentication",
+            "category": "Authentication",
+            "standard_reference": "NIST IA-2"
+        },
+        {
+            "control_id": "SC-RBAC-01",
+            "control_name": "Role-Based Access Control",
+            "category": "Authorization",
+            "standard_reference": "NIST AC-2"
+        },
+        {
+            "control_id": "SC-TLS-01",
+            "control_name": "TLS Encryption In Transit",
+            "category": "Encryption",
+            "standard_reference": "NIST SC-12"
+        },
+        {
+            "control_id": "SC-ADMIN-GW-01",
+            "control_name": "Secure Administrative Gateway",
+            "category": "Privileged Access",
+            "standard_reference": "NIST AC-17"
+        },
+        {
+            "control_id": "SC-TRAIN-01",
+            "control_name": "Security Awareness Training",
+            "category": "Personnel Security",
+            "standard_reference": "NIST AT-2"
+        }
+    ],
+    "claims": [
+        {
+            "claim_id": "CL-001",
+            "claim_type": "MANDATES_CONTROL",
+            "control_id": "SC-MFA-01",
+            "requirement_id": "CR-05",
+            "source_section": "6.2",
+            "quote": "Vendor shall enforce multi-factor authentication for all privileged access to Company Data."
+        },
+        {
+            "claim_id": "CL-002",
+            "claim_type": "MANDATES_CONTROL",
+            "control_id": "SC-RBAC-01",
+            "requirement_id": "CR-05",
+            "source_section": "6.7",
+            "quote": "Vendor shall implement role-based access control and unique user identification for system access."
+        },
+        {
+            "claim_id": "CL-003",
+            "claim_type": "MANDATES_CONTROL",
+            "control_id": "SC-TLS-01",
+            "requirement_id": "CR-04",
+            "source_section": "7.1",
+            "quote": "All Company Data transmitted over public or private networks shall be encrypted using TLS 1.2 or higher."
+        },
+        {
+            "claim_id": "CL-004",
+            "claim_type": "MANDATES_CONTROL",
+            "control_id": "SC-ADMIN-GW-01",
+            "requirement_id": "CR-05",
+            "source_section": "8.2",
+            "quote": "Administrative access shall be performed through a secure gateway with session logging enabled."
+        },
+        {
+            "claim_id": "CL-005",
+            "claim_type": "MANDATES_CONTROL",
+            "control_id": "SC-TRAIN-01",
+            "requirement_id": "CR-03",
+            "source_section": "9.1",
+            "quote": "Vendor shall ensure security awareness training for personnel upon hire and annually thereafter."
+        }
+    ],
+    "risk_items": [
+        {
+            "risk_id": "RA-01",
+            "affected_requirement": "CR-01",
+            "finding": "No explicit contractual requirement for password rotation, vaulting of privileged credentials, or protection against compromised passwords.",
+            "remediation_status": "Open"
+        },
+        {
+            "risk_id": "RA-02",
+            "affected_requirement": "CR-02",
+            "finding": "The contract does not explicitly mandate an IT asset inventory or periodic reconciliation.",
+            "remediation_status": "Open"
+        }
+    ],
+    "compliance_results": [
+        {
+            "requirement_id": "CR-01",
+            "compliance_state": "Non-Compliant",
+            "confidence": 0.85,
+            "rationale": "The contract lacks explicit requirements for comprehensive password management controls."
+        },
+        {
+            "requirement_id": "CR-02",
+            "compliance_state": "Non-Compliant",
+            "confidence": 0.8,
+            "rationale": "No contractual language was found mandating IT asset inventory or configuration baselines."
+        },
+        {
+            "requirement_id": "CR-03",
+            "compliance_state": "Fully Compliant",
+            "confidence": 0.9,
+            "rationale": "Security training and background checks are explicitly required with defined frequency."
+        },
+        {
+            "requirement_id": "CR-04",
+            "compliance_state": "Fully Compliant",
+            "confidence": 0.95,
+            "rationale": "The contract explicitly mandates encryption of data in transit using TLS 1.2 or higher."
+        },
+        {
+            "requirement_id": "CR-05",
+            "compliance_state": "Fully Compliant",
+            "confidence": 0.95,
+            "rationale": "The contract mandates MFA, RBAC, secure administrative access pathways, and session logging."
+        }
+    ]
+}

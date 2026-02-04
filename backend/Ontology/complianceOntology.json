@@ -1,0 +1,130 @@
+{
+    "ontology_name": "Compliance_Contract_Knowledge_Ontology",
+    "description": "Ontology for representing contractual compliance facts, controls, risks, and assessments grounded in source contract evidence.",
+    "entities": [
+        {
+            "type": "Contract",
+            "description": "A legal agreement subject to compliance evaluation.",
+            "attributes": [
+                "contract_id",
+                "title",
+                "effective_date"
+            ]
+        },
+        {
+            "type": "ContractSection",
+            "description": "A logical section or clause of a contract containing compliance-relevant language.",
+            "attributes": [
+                "section_id",
+                "title",
+                "block_type",
+                "raw_text"
+            ]
+        },
+        {
+            "type": "ComplianceRequirement",
+            "description": "A compliance requirement derived from internal policy or regulatory standards (Table 1 of the assignment).",
+            "attributes": [
+                "requirement_id",
+                "name",
+                "description"
+            ]
+        },
+        {
+            "type": "SecurityControl",
+            "description": "A technical or administrative safeguard required or referenced in the contract.",
+            "attributes": [
+                "control_id",
+                "control_name",
+                "category",
+                "standard_reference"
+            ]
+        },
+        {
+            "type": "ComplianceClaim",
+            "description": "An atomic, evidence-backed assertion extracted from a contract indicating the presence or absence of a control.",
+            "attributes": [
+                "claim_id",
+                "claim_type",
+                "strength",
+                "scope",
+                "conditions",
+                "quote"
+            ]
+        },
+        {
+            "type": "RiskItem",
+            "description": "A gap, exception, or missing obligation that negatively impacts compliance.",
+            "attributes": [
+                "risk_id",
+                "finding",
+                "remediation_status"
+            ]
+        },
+        {
+            "type": "ComplianceResult",
+            "description": "A derived compliance assessment for a specific requirement.",
+            "attributes": [
+                "compliance_state",
+                "confidence",
+                "rationale"
+            ]
+        }
+    ],
+    "relations": [
+        {
+            "type": "HAS_SECTION",
+            "source": "Contract",
+            "target": "ContractSection",
+            "description": "Indicates that a contract contains a specific section."
+        },
+        {
+            "type": "ADDRESSES",
+            "source": "ContractSection",
+            "target": "ComplianceRequirement",
+            "description": "Indicates that a contract section contains language relevant to a compliance requirement."
+        },
+        {
+            "type": "EXPRESSES_CLAIM",
+            "source": "ContractSection",
+            "target": "ComplianceClaim",
+            "description": "Links a contract section to a normalized compliance claim extracted from it."
+        },
+        {
+            "type": "MANDATES_CONTROL",
+            "source": "ComplianceClaim",
+            "target": "SecurityControl",
+            "description": "Indicates that a claim mandates or requires a specific security control."
+        },
+        {
+            "type": "SUPPORTS_REQUIREMENT",
+            "source": "ComplianceClaim",
+            "target": "ComplianceRequirement",
+            "description": "Indicates that a claim provides positive evidence toward satisfying a compliance requirement."
+        },
+        {
+            "type": "INTRODUCES_RISK",
+            "source": "ContractSection",
+            "target": "RiskItem",
+            "description": "Indicates that a contract section introduces a compliance risk or gap."
+        },
+        {
+            "type": "NEGATES_COMPLIANCE",
+            "source": "RiskItem",
+            "target": "ComplianceRequirement",
+            "description": "Indicates that a risk negatively affects a compliance requirement."
+        },
+        {
+            "type": "DERIVES_RESULT",
+            "source": "ComplianceRequirement",
+            "target": "ComplianceResult",
+            "description": "Indicates that a compliance result is derived for a specific requirement."
+        },
+        {
+            "type": "PROVIDES_EVIDENCE",
+            "source": "ComplianceClaim",
+            "target": "ComplianceResult",
+            "description": "Links compliance claims to the final compliance result for auditability and grounding."
+        }
+    ]
+}

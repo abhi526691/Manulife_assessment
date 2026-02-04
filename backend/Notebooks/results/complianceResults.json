@@ -1,0 +1,53 @@
+[
+  {
+    "Compliance Question": "Password Management",
+    "Compliance State": "",
+    "Confidence": "",
+    "Relevant Quotes": [],
+    "Rationale": "{\n    \"compliance_state\": \"Fully Compliant\",\n    \"confidence\": 92,\n    \"relevant_quotes\": [\n        \"Section 6.6: 'Vendor will maintain and enforce a written password standard for any password-based authentication used for the Services or the In-Scope Environment (including administrative accounts and \"break-glass\" accounts). At a minimum, Vendor will: (a) require passwords/passphrases of at least 14 characters for administrative accounts and at least 12 characters for other accounts, or, where supported, enforce equivalent strength via modern authentication controls; (b) prohibit the use of default vendor passwords and prohibit known-compromised passwords through screening controls; (c) require secure storage of passwords using salted hashing for any stored credentials and prohibit plaintext storage; (d) implement account lockout or rate limiting to mitigate brute force attacks; (e) prohibit password sharing, and prohibit reuse of privileged passwords across systems; (f) store administrative passwords and recovery codes only in a centralized approved vault with access logging; and (g) rotate \"break-glass\" credentials at least every 90 days and upon any suspected compromise or personnel change affecting authorized custodians.'\",\n        \"Section 6.7: 'Vendor will use modern protocols for authentication and authorization for the Services as follows: (a) End-user authentication. SAML 2.0 SSO is supported and is the default for Company; local user accounts (if enabled) must enforce MFA and password controls consistent with Section 6.6.'\",\n        \"Exhibit A (Control Matrix): 'Password Mgmt | password standard + vault | per Section 6.6 | password policy; vault logs'\"\n    ],\n    \"rationale\": \"The contract explicitly addresses the requirement for a documented password standard covering length/strength, secure storage, and rotation. Section 6.6 outlines the specific requirements for password management, including the use of salted hashing for secure storage and the rotation of 'break-glass' credentials every 90 days. Additionally, Section 6.7 requires the use of modern authentication protocols, including SAML 2.0 SSO, which is consistent with the requirement for secure authentication. The Control Matrix in Exhibit A also references Section 6.6 and notes the password policy and vault logs as evidence of compliance. Overall, the contract provides clear and specific commitments to meet the requirement, and the supporting evidence is thorough and well-documented.\"\n}"
+  },
+  {
+    "Compliance Question": "IT Asset Management",
+    "Compliance State": "Fully Compliant",
+    "Confidence": "92%",
+    "Relevant Quotes": [
+      "Section 9.1: 'Vendor will maintain an inventory of in-scope assets, including cloud accounts/subscriptions, production workloads, databases, and security tooling.'",
+      "Section 9.2: 'Vendor will review and reconcile the in-scope asset inventory at least quarterly and upon material changes.'",
+      "Exhibit F (Asset Inventory Minimum Fields): 'Asset ID, Asset type, Environment, Data sensitivity, Owner, Region, Last reviewed'"
+    ],
+    "Rationale": "Based on the contract analysis, the requirement for an in-scope asset inventory that is reconciled quarterly is fully compliant. The contract explicitly requires the vendor to maintain an inventory of in-scope assets (Section 9.1) and review and reconcile it at least quarterly (Section 9.2). The Asset Inventory Minimum Fields exhibit provides a clear outline of the required fields for the inventory. The confidence score is 92 due to the explicit language and strong commitments in the contract. The compliance state is Fully Compliant because all components of the requirement are addressed with clear, mandatory language. The supporting evidence includes verbatim quotes from the contract and exhibit, which demonstrate the vendor's obligations and the required fields for the inventory."
+  },
+  {
+    "Compliance Question": "Security Training & Background Checks",
+    "Compliance State": "Partially Compliant",
+    "Confidence": "67%",
+    "Relevant Quotes": [
+      "Exhibit G (G4. Cryptography and Secrets): 'Encrypt Company Data in transit | TLS 1.2+'",
+      "Exhibit G (G4. Cryptography and Secrets): 'Encrypt Company Data at rest | AES-256 or equivalent'",
+      "Section 5.1: 'Vendor will implement and maintain safeguards designed to protect confidentiality, integrity, and availability of Company Data'"
+    ],
+    "Rationale": "The contract requires annual security awareness training for Vendor Personnel with access to Company Data (Exhibit G, G4. Cryptography and Secrets). However, the contract does not explicitly require background screening for all personnel accessing Company Data. While the contract does mention background checks for Vendor Personnel (Exhibit G, G5. Personnel screening for Vendor Personnel with access), it only requires periodic checks where lawful, which may not meet the requirement of annual background screening. Furthermore, the contract does not provide specific metrics or SLAs for the security awareness training, which may indicate a lack of commitment to this requirement. Overall, the contract partially addresses the requirement, but with notable gaps and ambiguities."
+  },
+  {
+    "Compliance Question": "Data in Transit Encryption",
+    "Compliance State": "Partially Compliant",
+    "Confidence": "67%",
+    "Relevant Quotes": [
+      "Section 5.1: 'Vendor will implement and maintain safeguards designed to protect confidentiality, integrity, and availability of Company Data, including the minimum controls in this Addendum and the Security Schedule in Exhibit G.'",
+      "Section 10: 'Vendor will maintain secure SDLC practices and change management for production changes affecting Company Data.'",
+      "Exhibit G (Security Schedule): 'Vendor will implement and maintain TLS 1.2 or higher for all external and internal transmissions of Company Data.'"
+    ],
+    "Rationale": "The contract partially meets the requirement for enforcing TLS 1.2 or higher for all data in transit over untrusted networks. Section 5.1 requires the vendor to implement safeguards for protecting Company Data, which includes confidentiality, integrity, and availability. However, this section does not explicitly mention TLS 1.2 or higher. Section 10 requires the vendor to maintain secure SDLC practices and change management for production changes affecting Company Data, which implies the use of secure protocols like TLS. Exhibit G (Security Schedule) explicitly requires the vendor to implement and maintain TLS 1.2 or higher for all external and internal transmissions of Company Data. However, this requirement is only applicable to the Security Schedule and not the main body of the contract. Therefore, the contract is partially compliant with the requirement. The confidence score is 67 because the contract has some explicit commitments, but there are also gaps and ambiguities in the language. The underlying security principle being protected is confidentiality, integrity, and availability of Company Data."
+  },
+  {
+    "Compliance Question": "Network Authentication & Authorization Protocols",
+    "Compliance State": "Fully Compliant",
+    "Confidence": "92%",
+    "Relevant Quotes": [
+      "Section 6.2: 'Vendor will enforce multi-factor authentication (MFA) for (a) privileged accounts, (b) remote access, and (c) all access to production environments.'",
+      "Exhibit G (IAM-01/IAM-02): 'MFA required for all privileged and production access'",
+      "Section 6.7: 'Administrative access to production will occur only via the approved bastion/secure gateway with MFA and session logging.'"
+    ],
+    "Rationale": "Based on the contract analysis, the requirement for MFA for all privileged access and secure pathways like bastions for production is fully met. Section 6.2 explicitly states that MFA is required for privileged accounts, remote access, and all access to production environments. Exhibit G (IAM-01/IAM-02) further reinforces this requirement, stating that MFA is required for all privileged and production access. Additionally, Section 6.7 ensures that administrative access to production occurs only via the approved bastion/secure gateway with MFA and session logging. These provisions demonstrate a strong commitment to implementing MFA for all privileged access and secure pathways, aligning with the underlying security principle of ensuring accountability and least privilege. Therefore, the compliance state is Fully Compliant, with a confidence score of 92."
+  }
+]
