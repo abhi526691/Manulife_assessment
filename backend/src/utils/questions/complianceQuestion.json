@@ -1,0 +1,24 @@
+{
+    "contract_audit_config": {
+        "version": "1.0",
+        "last_updated": "2026-02-03",
+        "questions": [
+            {
+                "id": 1,
+                "title": "Password Management",
+                "pre_condition": "The contract must require a documented password standard covering length/strength, secure storage, and rotation.",
+                "question": "Does the vendor maintain a written password standard that requires at least 14 characters for admin accounts and salted hashing for storage?",
+                "search_keywords": [
+                    "password",
+                    "hashing",
+                    "brute-force",
+                    "lockout",
+                    "vaulting",
+                    "rotation",
+                    "plaintext"
+                ],
+                "category": "Access Control"
+            }
+        ]
+    }
+}

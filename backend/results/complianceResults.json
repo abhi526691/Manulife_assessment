@@ -1,0 +1,9 @@
+[
+  {
+    "Compliance Question": "Password Management",
+    "Compliance State": "Fully Compliant",
+    "Confidence": 92,
+    "Relevant Quotes": "Section 6.6 (+ Password Management Standard); Exhibit A (AuthN/AuthZ); Section 12.1 (Logging), Section 13.1 (Data Minimization)",
+    "Rationale": "The vendor maintains a written password standard (Section 6.6) that covers length/strength, secure storage, and rotation with at least 14 characters for admin accounts and salted hashing for storage. Additionally, the authentication/authorization protocols (Exhibit A) and logging requirements (Section 12.1) align with the requirement. Finally, the vendor complies with data minimization (Section 13.1), ensuring that only the minimum Company Data necessary is collected and processed."
+  }
+]
