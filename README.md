@@ -434,15 +434,14 @@ This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) 
 
 ## 👥 Authors
 
-- **Manulife Assessment Team**
-- Contact: [your-email@manulife.com]
+- Contact: [abhi526691shek@gmail.com]
 
 ---
 
 ## 🙏 Acknowledgments
 
 - **Mistral AI** for advanced OCR capabilities
-- **Anthropic** for Claude reasoning frameworks
+- **Gemini/Llama** for  reasoning frameworks
 - **LangChain** for RAG infrastructure
 - **Streamlit** for rapid UI development
 
