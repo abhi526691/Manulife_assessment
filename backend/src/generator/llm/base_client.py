@@ -1,15 +1,14 @@
 from langchain_core.prompts import PromptTemplate
 from langchain_classic.chains import RetrievalQA
-from src.generator.prompts.stepback_prompting import PROMPT_TEMPLATE
 
 
-def build_qa_chain(llm, vector_store, output_parser, k=3):
+def build_qa_chain(llm,prompt_template, vector_store, output_parser, k=3):
     """
     Builds a RetrievalQA chain with structured output parsing.
     """
-
+    print("----Building QA Chain----")
     prompt = PromptTemplate(
-        template=PROMPT_TEMPLATE,
+        template=prompt_template,
         input_variables=["context", "question"],
         partial_variables={
             "format_instructions": output_parser.get_format_instructions()

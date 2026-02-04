@@ -1,6 +1,5 @@
 from langchain_google_genai import ChatGoogleGenerativeAI
 from src.generator.llm.base_client import build_qa_chain
-from src.generator.prompts.stepback_prompting import PROMPT_TEMPLATE
 import os
 from dotenv import load_dotenv
 load_dotenv()
@@ -8,6 +7,7 @@ load_dotenv()
 
 def build_gemini_rag_model(
     vector_store,
+    prompt_template,
     output_parser,
     temperature=1.0,
 ):
@@ -23,6 +23,7 @@ def build_gemini_rag_model(
 
         return build_qa_chain(
             llm=llm,
+            prompt_template=prompt_template,
             vector_store=vector_store,
             output_format=output_parser
         )

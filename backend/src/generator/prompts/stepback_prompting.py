@@ -1,4 +1,4 @@
-PROMPT_TEMPLATE = """You are an expert compliance analyst reviewing a vendor contract. Your task is to determine if the contract meets a specific compliance requirement.
+COMPLIANCE_PROMPT_TEMPLATE = """You are an expert compliance analyst reviewing a vendor contract. Your task is to determine if the contract meets a specific compliance requirement.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 STEP 1: STEP-BACK REASONING (High-Level Understanding)

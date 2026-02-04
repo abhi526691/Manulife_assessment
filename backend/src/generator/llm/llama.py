@@ -1,6 +1,5 @@
 from langchain_groq import ChatGroq
 from src.generator.llm.base_client import build_qa_chain
-from src.generator.prompts.stepback_prompting import PROMPT_TEMPLATE
 import os
 from dotenv import load_dotenv
 load_dotenv()
@@ -8,6 +7,7 @@ load_dotenv()
 
 def build_llama_rag_model(
     vector_store,
+    prompt_template,
     output_parser,
     model_name="llama-3.1-8b-instant",
     temperature=1.0,
@@ -26,6 +26,7 @@ def build_llama_rag_model(
 
         return build_qa_chain(
             llm=llm,
+            prompt_template=prompt_template,
             vector_store=vector_store,
             output_parser=output_parser
         )

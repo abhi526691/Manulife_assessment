@@ -18,6 +18,69 @@
                     "plaintext"
                 ],
                 "category": "Access Control"
+            },
+            {
+                "id": 2,
+                "title": "IT Asset Management",
+                "pre_condition": "The contract must require an in-scope asset inventory that is reconciled quarterly.",
+                "question": "Does the vendor maintain an inventory of all cloud accounts and production workloads, and is it reviewed every 90 days?",
+                "search_keywords": [
+                    "inventory",
+                    "asset",
+                    "reconciliation",
+                    "drift",
+                    "baseline",
+                    "configuration",
+                    "database"
+                ],
+                "category": "Asset Management"
+            },
+            {
+                "id": 3,
+                "title": "Security Training & Background Checks",
+                "pre_condition": "The contract must require annual security awareness training and background screening for all personnel with data access.",
+                "question": "Are background checks and annual security training mandatory for all personnel accessing Company Data?",
+                "search_keywords": [
+                    "training",
+                    "awareness",
+                    "background check",
+                    "screening",
+                    "personnel",
+                    "annually"
+                ],
+                "category": "Human Resources"
+            },
+            {
+                "id": 4,
+                "title": "Data in Transit Encryption",
+                "pre_condition": "The contract must enforce TLS 1.2 or higher for all data in transit over untrusted networks.",
+                "question": "Does the vendor explicitly commit to using TLS 1.2+ for all external and internal transmissions of Company Data?",
+                "search_keywords": [
+                    "TLS",
+                    "encryption",
+                    "transit",
+                    "cipher",
+                    "certificate",
+                    "subprocessor"
+                ],
+                "category": "Cryptography"
+            },
+            {
+                "id": 5,
+                "title": "Network Authentication & Authorization Protocols",
+                "pre_condition": "The contract must specify MFA for all privileged access and secure pathways like bastions for production.",
+                "question": "Is MFA required for all administrative access, and is production access restricted to approved bastion hosts with session logging?",
+                "search_keywords": [
+                    "MFA",
+                    "SAML",
+                    "SSO",
+                    "OAuth",
+                    "RBAC",
+                    "bastion",
+                    "gateway",
+                    "logging"
+                ],
+                "category": "Network Security"
             }
         ]
     }
