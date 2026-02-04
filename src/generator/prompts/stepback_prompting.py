@@ -122,14 +122,22 @@ Respond with a valid JSON object:
 OUTPUT FORMAT (STRICT)
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-Return ONLY a valid JSON object in this exact schema:
+**CRITICAL: Return ONLY the JSON object below. Do NOT include any preamble, explanation, or text after the JSON.**
+
+Return exactly this structure with no additional text:
 
 {{
   "compliance_state": "Fully Compliant" | "Partially Compliant" | "Non-Compliant",
   "confidence": <integer between 0 and 100>,
-  "relevant_quotes": Single concise citation-style string listing all relevant sections and exhibits separated by semicolons. Example: Section 6.7 (+ Authentication/Authorization Summary Table); Section 6.2 (MFA); Exhibit G13 (NET-01–NET-03).",
+  "relevant_quotes": "Section X.Y (...); Section A.B (...); Exhibit C (...)",
   "rationale": "Concise 2–4 sentence justification referencing specific contract sections and any gaps."
 }}
+
+**DO NOT include:**
+- "Here is the response..."
+- Explanations before or after the JSON
+- Markdown code fences (```json)
+- Any text outside the JSON object
 
 **CRITICAL QUALITY CHECKS:**
 ✓ Compliance state is accurate and justified

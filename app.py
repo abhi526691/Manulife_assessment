@@ -21,7 +21,7 @@ st.set_page_config(
 )
 
 # --------------------------------------------------
-# Enhanced Global Styling
+# Enhanced Global Styling with JavaScript to hide collapse button
 # --------------------------------------------------
 st.markdown(f"""
 <style>
@@ -54,6 +54,72 @@ h1 {{
 
 [data-testid="stSidebar"] > div:first-child {{
     padding-top: 2rem;
+}}
+
+/* Keep sidebar always expanded - more aggressive rules */
+section[data-testid="stSidebar"] {{
+    position: relative !important;
+    min-width: 21rem !important;
+    max-width: 21rem !important;
+    transform: none !important;
+    margin-left: 0 !important;
+}}
+
+section[data-testid="stSidebar"] > div {{
+    min-width: 21rem !important;
+    max-width: 21rem !important;
+}}
+
+section[data-testid="stSidebar"][aria-expanded="false"] {{
+    min-width: 21rem !important;
+    max-width: 21rem !important;
+    margin-left: 0 !important;
+    transform: translateX(0) !important;
+}}
+
+section[data-testid="stSidebar"][aria-expanded="true"] {{
+    min-width: 21rem !important;
+    max-width: 21rem !important;
+}}
+
+/* Hide ALL collapse-related buttons - multiple selectors for redundancy */
+button[kind="header"] {{
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+}}
+
+button[data-testid="baseButton-header"] {{
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+}}
+
+button[kind="header"][data-testid="baseButton-header"] {{
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+}}
+
+[data-testid="collapsedControl"] {{
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+}}
+
+/* Hide any button in the sidebar header area */
+[data-testid="stSidebar"] button[kind="header"] {{
+    display: none !important;
+    visibility: hidden !important;
+}}
+
+/* Remove the space where the button would be */
+[data-testid="stSidebar"] > div > div:first-child {{
+    padding-left: 1rem !important;
 }}
 
 .chat-header {{
@@ -163,6 +229,42 @@ h1 {{
     margin-bottom: 1rem;
 }}
 </style>
+
+<script>
+// JavaScript to forcefully remove collapse button on load and monitor for changes
+(function() {{
+    function hideCollapseButton() {{
+        const buttons = window.parent.document.querySelectorAll(
+            'button[kind="header"], button[data-testid="baseButton-header"], [data-testid="collapsedControl"]'
+        );
+        buttons.forEach(btn => {{
+            btn.style.display = 'none';
+            btn.style.visibility = 'hidden';
+            btn.style.opacity = '0';
+            btn.style.pointerEvents = 'none';
+        }});
+    }}
+
+    // Run immediately
+    hideCollapseButton();
+
+    // Run after page load
+    window.addEventListener('load', hideCollapseButton);
+
+    // Monitor for DOM changes and hide button if it appears
+    const observer = new MutationObserver(hideCollapseButton);
+    observer.observe(window.parent.document.body, {{
+        childList: true,
+        subtree: true
+    }});
+
+    // Run repeatedly for the first few seconds to catch dynamic loading
+    setTimeout(hideCollapseButton, 100);
+    setTimeout(hideCollapseButton, 500);
+    setTimeout(hideCollapseButton, 1000);
+    setTimeout(hideCollapseButton, 2000);
+}})();
+</script>
 """, unsafe_allow_html=True)
 
 # --------------------------------------------------
@@ -215,7 +317,11 @@ def render_chat_sidebar():
                 </div>
             """, unsafe_allow_html=True)
         else:
-            # Display each message using streamlit's native components
+            # Create a container for scrollable messages
+            st.markdown(
+                '<div style="max-height: 50vh; overflow-y: auto;">', unsafe_allow_html=True)
+
+            # Display each message
             for idx, message in enumerate(st.session_state.chat_history):
                 role_label = "You" if message["role"] == "user" else "AI Assistant"
                 role_icon = "👤" if message["role"] == "user" else "🤖"
@@ -226,6 +332,8 @@ def render_chat_sidebar():
                         <div class="content">{html_module.escape(message['content'])}</div>
                     </div>
                 """, unsafe_allow_html=True)
+
+            st.markdown('</div>', unsafe_allow_html=True)
 
         # Spacer
         st.markdown("<br>", unsafe_allow_html=True)
@@ -302,7 +410,7 @@ if st.session_state.page == "upload":
         extractor = textExtractor(pdf_path=uploaded_file)
 
         with st.spinner("Extracting document content..."):
-            result = extractor.get_stored_response()
+            result = extractor.ocr_response_file()
 
         st.session_state.markdown = result["markdown"]
         st.session_state.structured_json = result["structured_json"]

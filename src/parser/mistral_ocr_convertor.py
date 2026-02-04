@@ -37,17 +37,17 @@ class textExtractor(contractParser):
             "structured_json": structured_json
         }
 
-    def ocr_response_file(self, pdf_file):
+    def ocr_response_file(self):
         """
         Handles both Streamlit UploadedFile and local file paths
         """
         # Determine filename and bytes content
-        if hasattr(pdf_file, "read"):  # Streamlit UploadedFile
-            file_name = pdf_file.name
-            file_bytes = pdf_file.read()
+        if hasattr(self.pdf_path, "read"):  # Streamlit UploadedFile
+            file_name = self.pdf_path.name
+            file_bytes = self.pdf_path.read()
         else:  # Local file path
-            file_name = os.path.basename(pdf_file)
-            with open(pdf_file, "rb") as f:
+            file_name = os.path.basename(self.pdf_path)
+            with open(self.pdf_path, "rb") as f:
                 file_bytes = f.read()
 
         # Upload file to Mistral API

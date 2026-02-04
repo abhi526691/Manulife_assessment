@@ -1,0 +1,37 @@
+[
+  {
+    "Compliance Question": "Password Management",
+    "Compliance State": "Partially Compliant",
+    "Confidence": 65,
+    "Relevant Quotes": "Section 6.6 (...); Section 6.7 (...); Exhibit C (...)",
+    "Rationale": "The contract addresses the password length requirement under Section 6.6, with a minimum of 14 characters for admin accounts. However, the contract lacks specific language regarding salted hashing for storage, and only mentions it as a requirement within the password management standard. Therefore, this contract is considered partially compliant with certain components of the password standards addressed."
+  },
+  {
+    "Compliance Question": "IT Asset Management",
+    "Compliance State": "Fully Compliant",
+    "Confidence": 92,
+    "Relevant Quotes": "\"Vendor will maintain an inventory of in-scope assets, including cloud accounts/subscriptions, production workloads, databases, and security tooling. The inventory will identify environment (prod/non-prod), owner, and criticality.\" (Section 9.1); \"Vendor will review and reconcile the in-scope asset inventory at least quarterly and upon material changes.\" (Section 9.2); \"Asset inventory snapshots will be retained for at least 2 years.\" (Records Retention Schedule, Table 1)",
+    "Rationale": "The contract requires an in-scope asset inventory, including cloud accounts and production workloads, which is reconciled quarterly (Section 9.1-2). The asset inventory snapshots will be retained for at least 2 years (Records Retention Schedule). The evidence is explicit, and the language is mandatory, ensuring complete coverage and clarity."
+  },
+  {
+    "Compliance Question": "Security Training & Background Checks",
+    "Compliance State": "Partially Compliant",
+    "Confidence": 71,
+    "Relevant Quotes": "G4. Cryptography and Secrets (Requirement CRYP-01); G5. Vulnerability and Patch Management (Requirement VULN-01)",
+    "Rationale": "Annual security awareness training requirement is explicitly stated in G4, but the contract requires it every year, rather than annually. Background screening is required for Vendor Personnel with access, as mentioned in G4, which includes Vendor Personnel with access to Company Data. However, the contract does not explicitly mention the frequency of background checks, other than on hire and periodically where lawful. The contract also lacks specific and measurable commitments for some of the requirements, mainly related to the frequency of background checks."
+  },
+  {
+    "Compliance Question": "Data in Transit Encryption",
+    "Compliance State": "Partially Compliant",
+    "Confidence": 58,
+    "Relevant Quotes": "5.1 Baseline (Section 5); 'Vendor will implement and maintain safeguards designed to protect confidentiality, integrity, and availability of Company Data (...)' and 'Security Schedule in Exhibit G'",
+    "Rationale": "The contract references confidentiality, integrity, and availability, which partially meets the requirement. However, the specific commitment to using TLS 1.2 or higher for all data in transit over untrusted networks is not explicitly mentioned. The relevant section (5.1) outlines broader security requirements, and Exhibit G, while containing security-related information, does not provide clear, measurable commitments related to TLS versions."
+  },
+  {
+    "Compliance Question": "Network Authentication & Authorization Protocols",
+    "Compliance State": "Fully Compliant",
+    "Confidence": 93,
+    "Relevant Quotes": "Section 6.2 (MFA for privileged accounts, remote access, and production environments); Exhibit G (Authentication/Authorization Summary Table); Section 6.3 (Control and monitoring of privileged access)",
+    "Rationale": "This contract explicitly requires multi-factor authentication (MFA) for all privileged accounts, remote access, and production environments. The Authentication/Authorization Summary Table in Exhibit G provides specific details on MFA requirements. Additionally, Section 6.3 ensures the control and monitoring of privileged access, meeting the requirement with precise language and explicit commitments."
+  }
+]
