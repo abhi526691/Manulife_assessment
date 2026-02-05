@@ -1,37 +1,37 @@
 [
   {
     "Compliance Question": "Password Management",
-    "Compliance State": "Partially Compliant",
-    "Confidence": 65,
-    "Relevant Quotes": "Section 6.6 (...); Section 6.7 (...); Exhibit C (...)",
-    "Rationale": "The contract addresses the password length requirement under Section 6.6, with a minimum of 14 characters for admin accounts. However, the contract lacks specific language regarding salted hashing for storage, and only mentions it as a requirement within the password management standard. Therefore, this contract is considered partially compliant with certain components of the password standards addressed."
+    "Compliance State": "Fully Compliant",
+    "Confidence": 92,
+    "Relevant Quotes": "Section 6.6 (...); Section 7.4 (...); Exhibit A (...)",
+    "Rationale": "The contract requires the vendor to maintain a written password standard, including administrative accounts with a minimum of 14 characters for length and strength. Additionally, the contract specifies salted hashing for storage and requires secure storage of passwords. These commitments meet the requirement, and there are no notable gaps or ambiguities."
   },
   {
     "Compliance Question": "IT Asset Management",
     "Compliance State": "Fully Compliant",
     "Confidence": 92,
-    "Relevant Quotes": "\"Vendor will maintain an inventory of in-scope assets, including cloud accounts/subscriptions, production workloads, databases, and security tooling. The inventory will identify environment (prod/non-prod), owner, and criticality.\" (Section 9.1); \"Vendor will review and reconcile the in-scope asset inventory at least quarterly and upon material changes.\" (Section 9.2); \"Asset inventory snapshots will be retained for at least 2 years.\" (Records Retention Schedule, Table 1)",
-    "Rationale": "The contract requires an in-scope asset inventory, including cloud accounts and production workloads, which is reconciled quarterly (Section 9.1-2). The asset inventory snapshots will be retained for at least 2 years (Records Retention Schedule). The evidence is explicit, and the language is mandatory, ensuring complete coverage and clarity."
+    "Relevant Quotes": "Section 9.1; Section 9.2; Exhibit G (ASSET-01)",
+    "Rationale": "The contract requires the vendor to maintain an inventory of in-scope assets (Section 9.1), review and reconcile the inventory at least quarterly and upon material changes (Section 9.2), and maintain secure configuration baselines for in-scope systems (Section 9.3). The inventory is to include at least the 'Asset ID', 'Asset type', 'Environment', 'Data sensitivity', 'Owner', 'Region', and 'Last reviewed' fields (Exhibit G (ASSET-01) Asset Inventory Minimum Fields)."
   },
   {
     "Compliance Question": "Security Training & Background Checks",
     "Compliance State": "Partially Compliant",
-    "Confidence": 71,
-    "Relevant Quotes": "G4. Cryptography and Secrets (Requirement CRYP-01); G5. Vulnerability and Patch Management (Requirement VULN-01)",
-    "Rationale": "Annual security awareness training requirement is explicitly stated in G4, but the contract requires it every year, rather than annually. Background screening is required for Vendor Personnel with access, as mentioned in G4, which includes Vendor Personnel with access to Company Data. However, the contract does not explicitly mention the frequency of background checks, other than on hire and periodically where lawful. The contract also lacks specific and measurable commitments for some of the requirements, mainly related to the frequency of background checks."
+    "Confidence": 74,
+    "Relevant Quotes": "Exhibit G4. Cryptography and Secrets, ID CRYP-02 (Encrypt Company Data at rest); Security Schedule, G1. Governance and Risk Management, Requirement GOV-04 (Maintain security awareness training); Section 5.1 (Vendor will implement and maintain safeguards designed to protect confidentiality, integrity, and availability of Company Data)",
+    "Rationale": "The contract requires annual security awareness training through Exhibit G1. Governance and Risk Management, Requirement GOV-04. Additionally, the Security Schedule, G4. Cryptography and Secrets, ID CRYP-02, requires encryption of Company Data at rest. However, the control baseline and minimum security requirements in Section 5.1 lack explicit language on annual background screening for all personnel with data access, resulting in a partially compliant determination."
   },
   {
     "Compliance Question": "Data in Transit Encryption",
     "Compliance State": "Partially Compliant",
-    "Confidence": 58,
-    "Relevant Quotes": "5.1 Baseline (Section 5); 'Vendor will implement and maintain safeguards designed to protect confidentiality, integrity, and availability of Company Data (...)' and 'Security Schedule in Exhibit G'",
-    "Rationale": "The contract references confidentiality, integrity, and availability, which partially meets the requirement. However, the specific commitment to using TLS 1.2 or higher for all data in transit over untrusted networks is not explicitly mentioned. The relevant section (5.1) outlines broader security requirements, and Exhibit G, while containing security-related information, does not provide clear, measurable commitments related to TLS versions."
+    "Confidence": 63,
+    "Relevant Quotes": "5.1 Baseline. Vendor will implement and maintain safeguards designed to protect confidentiality, integrity, and availability of Company Data (...); 18. Regulatory Requests and Legal Holds Vendor will notify Company of legally binding requests for Company Data (...); 10. Secure Development and Change Management (if applicable) Vendor will maintain secure SDLC practices and change management for production changes affecting Company Data.",
+    "Rationale": "Although the contract mentions safeguarding Company Data, the requirements do not explicitly state the use of TLS 1.2 or higher for all external and internal transmissions. Section 5.1 mentions a general baseline of safeguarding Company Data, but it doesn't specifically address encryption. Additionally, Section 18 and 10 refer to different types of data and processes, but they don't provide clarity on the encryption standard used for data in transit."
   },
   {
     "Compliance Question": "Network Authentication & Authorization Protocols",
     "Compliance State": "Fully Compliant",
-    "Confidence": 93,
-    "Relevant Quotes": "Section 6.2 (MFA for privileged accounts, remote access, and production environments); Exhibit G (Authentication/Authorization Summary Table); Section 6.3 (Control and monitoring of privileged access)",
-    "Rationale": "This contract explicitly requires multi-factor authentication (MFA) for all privileged accounts, remote access, and production environments. The Authentication/Authorization Summary Table in Exhibit G provides specific details on MFA requirements. Additionally, Section 6.3 ensures the control and monitoring of privileged access, meeting the requirement with precise language and explicit commitments."
+    "Confidence": 92,
+    "Relevant Quotes": "Section 6.2 (MFA for privileged and production access); Section 6.7 (Administrative access via approved bastion/secure gateway); Exhibit G (AuthN/AuthZ)",
+    "Rationale": "The contract explicitly mentions MFA for privileged and production access (Section 6.2), administrative access occurs only via approved bastion/secure gateway with MFA and session logging (Section 6.7), and Exhibit G provides comprehensive AuthN/AuthZ details. Although Exhibit C lists some authentication protocols, the overall contract demonstrates a clear commitment to MFA for all relevant access types."
   }
 ]
