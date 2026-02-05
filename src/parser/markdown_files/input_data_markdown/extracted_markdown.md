@@ -47,9 +47,6 @@ If there is a conflict between this Addendum and the Agreement relating to infor
 |  Identity provider and SSO integration | Y | SAML SSO + admin auth  |
 |  Bastion/jump host / ZTNA gateway | Y | administrative pathway  |
 |  End-user devices used for administration | Y | Vendor-admin managed devices only  |
-|  Data storage | N | data storage  |
-|  Data storage and data management | N | data storage and data management  |
-|  Data management and data management | N | data management and data management  |
 
 |  Component/Record Type | Included In-Scope? | Notes  |
 | --- | --- | --- |

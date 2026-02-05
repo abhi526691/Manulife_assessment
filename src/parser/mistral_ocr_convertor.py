@@ -15,8 +15,8 @@ class textExtractor(contractParser):
         """
         Reads the markdown and JSON content from the local storage paths.
         """
-        json_path = "D:\\Assessment\\ManulifeAssessment\\Manulife_assessment\\backend\\src\\parser\\Json_files\\input_data_json\\structured_output.json"
-        md_path = "D:\\Assessment\\ManulifeAssessment\\Manulife_assessment\\backend\\src\\parser\\markdown_files\\input_data_markdown\\extracted_markdown.md"
+        json_path = "D:\\Assessment\\ManulifeAssessment\\Manulife_assessment\\src\\parser\\Json_files\\input_data_json\\structured_output.json"
+        md_path = "D:\\Assessment\\ManulifeAssessment\\Manulife_assessment\\src\\parser\\markdown_files\\input_data_markdown\\extracted_markdown.md"
 
         # Read JSON file
         try:

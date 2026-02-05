@@ -346,19 +346,6 @@ Advanced reasoning framework that guides LLM through:
 
 ## Team & Governance
 
-### Development Team
-
-- **Project Lead**: [Name], Senior Legal Counsel
-- **AI/ML Engineer**: [Name], Data Science Team
-- **Backend Developer**: [Name], Application Development
-- **QA Lead**: [Name], Quality Assurance
-
-### Stakeholders
-
-- **Primary Users**: Legal & Compliance Team (12 members)
-- **Secondary Users**: Procurement (5 members)
-- **Executive Sponsor**: Chief Legal Officer
-
 ### Governance
 
 - **Code Repository**: GitHub (private repo)

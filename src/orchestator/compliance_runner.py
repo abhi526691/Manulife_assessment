@@ -33,7 +33,7 @@ def ask_bot(qa_chain, question):
 #     """
 #     Reads the markdown and JSON content from the local storage paths.
 #     """
-#     json_path = "D:/Assessment/ManulifeAssessment/Manulife_assessment/backend/results/complianceResults.json"
+#     json_path = "D:/Assessment/ManulifeAssessment/Manulife_assessment/results/complianceResults.json"
 
 #     # Read JSON file
 #     try:

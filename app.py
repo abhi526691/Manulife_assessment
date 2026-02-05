@@ -3,7 +3,9 @@ from src.parser.mistral_ocr_convertor import textExtractor
 from src.orchestator.compliance_runner import run_compliance, run_qna, ask_bot
 import streamlit.components.v1 as components
 import html as html_module
+import markdown
 import time
+import re
 
 # --------------------------------------------------
 # Manulife Brand Colors
@@ -459,11 +461,155 @@ elif st.session_state.page == "document":
                 st.rerun()
 
     # ---------------- Document Display ----------------
+
+    def convert_markdown_to_html_complete(markdown_text):
+        """Convert markdown to HTML with proper handling of all elements"""
+        html = markdown_text
+
+        # 1. Convert images first (before other conversions)
+        def replace_images(match):
+            alt_text = match.group(1)
+            data_uri = match.group(2)
+            return f'<img src="{data_uri}" alt="{alt_text}" style="max-width: 100%; height: auto; border-radius: 8px; margin: 1.5rem 0; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); display: block;">'
+
+        html = re.sub(r'!\[([^\]]*)\]\((data:image/[^)]+)\)',
+                      replace_images, html)
+
+        # 2. Convert tables
+        def convert_table(table_match):
+            table_text = table_match.group(0)
+            lines = [line.strip()
+                     for line in table_text.strip().split('\n') if line.strip()]
+
+            if len(lines) < 2:
+                return table_text
+
+            # Parse header
+            headers = [cell.strip()
+                       for cell in lines[0].split('|') if cell.strip()]
+
+            # Skip separator line
+            data_lines = lines[2:] if len(lines) > 2 else []
+
+            # Build HTML table
+            table_html = '<table>'
+            table_html += '<thead><tr>'
+            for header in headers:
+                table_html += f'<th>{header}</th>'
+            table_html += '</tr></thead><tbody>'
+
+            for line in data_lines:
+                cells = [cell.strip()
+                         for cell in line.split('|') if cell.strip()]
+                if cells:
+                    table_html += '<tr>'
+                    for cell in cells:
+                        table_html += f'<td>{cell}</td>'
+                    table_html += '</tr>'
+
+            table_html += '</tbody></table>'
+            return table_html
+
+        # Match markdown tables
+        table_pattern = r'(?:^\|.+\|\s*$\n)+(?:^\|[\s\-:]+\|\s*$\n)?(?:^\|.+\|\s*$\n?)+'
+        html = re.sub(table_pattern, convert_table, html, flags=re.MULTILINE)
+
+        # 3. Convert headers (with proper spacing)
+        html = re.sub(r'^# (.+)$', r'<h1>\1</h1>', html, flags=re.MULTILINE)
+        html = re.sub(r'^## (.+)$', r'<h2>\1</h2>', html, flags=re.MULTILINE)
+        html = re.sub(r'^### (.+)$', r'<h3>\1</h3>', html, flags=re.MULTILINE)
+        html = re.sub(r'^#### (.+)$', r'<h4>\1</h4>', html, flags=re.MULTILINE)
+
+        # 4. Convert checkboxes
+        html = re.sub(
+            r'\[ \]', '<input type="checkbox" disabled style="margin-right: 8px;">', html)
+        html = re.sub(
+            r'\[x\]', '<input type="checkbox" checked disabled style="margin-right: 8px;">', html, flags=re.IGNORECASE)
+
+        # 5. Convert unordered lists (bullets)
+        def convert_ul(match):
+            items = match.group(0).strip().split('\n')
+            list_html = '<ul>'
+            for item in items:
+                # Remove the bullet marker and convert
+                item_text = re.sub(r'^[\s]*[-*+]\s+', '', item)
+                if item_text:
+                    list_html += f'<li>{item_text}</li>'
+            list_html += '</ul>'
+            return list_html
+
+        # Match consecutive bullet point lines
+        ul_pattern = r'(?:^[\s]*[-*+]\s+.+$\n?)+'
+        html = re.sub(ul_pattern, convert_ul, html, flags=re.MULTILINE)
+
+        # 6. Convert ordered lists (numbers)
+        def convert_ol(match):
+            items = match.group(0).strip().split('\n')
+            list_html = '<ol>'
+            for item in items:
+                # Remove the number marker and convert
+                item_text = re.sub(r'^[\s]*\d+\.\s+', '', item)
+                if item_text:
+                    list_html += f'<li>{item_text}</li>'
+            list_html += '</ol>'
+            return list_html
+
+        # Match consecutive numbered lines
+        ol_pattern = r'(?:^[\s]*\d+\.\s+.+$\n?)+'
+        html = re.sub(ol_pattern, convert_ol, html, flags=re.MULTILINE)
+
+        # 7. Convert bold and italic
+        html = re.sub(r'\*\*\*(.+?)\*\*\*',
+                      r'<strong><em>\1</em></strong>', html)
+        html = re.sub(r'\*\*(.+?)\*\*', r'<strong>\1</strong>', html)
+        html = re.sub(r'\*(.+?)\*', r'<em>\1</em>', html)
+        html = re.sub(r'___(.+?)___', r'<strong><em>\1</em></strong>', html)
+        html = re.sub(r'__(.+?)__', r'<strong>\1</strong>', html)
+        html = re.sub(r'_(.+?)_', r'<em>\1</em>', html)
+
+        # 8. Convert inline code
+        html = re.sub(r'`([^`]+)`', r'<code>\1</code>', html)
+
+        # 9. Convert code blocks
+        html = re.sub(r'```[\w]*\n(.*?)```',
+                      r'<pre><code>\1</code></pre>', html, flags=re.DOTALL)
+
+        # 10. Convert links
+        html = re.sub(r'\[([^\]]+)\]\(([^)]+)\)',
+                      r'<a href="\2" target="_blank">\1</a>', html)
+
+        # 11. Convert horizontal rules
+        html = re.sub(r'^[\s]*---[\s]*$', '<hr>', html, flags=re.MULTILINE)
+        html = re.sub(r'^[\s]*\*\*\*[\s]*$', '<hr>', html, flags=re.MULTILINE)
+
+        # 12. Convert line breaks and paragraphs
+        # Split by double newlines to identify paragraphs
+        blocks = re.split(r'\n\n+', html)
+        processed_blocks = []
+
+        for block in blocks:
+            block = block.strip()
+            if not block:
+                continue
+
+            # Check if block is already an HTML element
+            if block.startswith('<') and '>' in block:
+                processed_blocks.append(block)
+            else:
+                # Regular text - wrap in paragraph and convert single newlines to <br>
+                block = block.replace('\n', '<br>')
+                processed_blocks.append(f'<p>{block}</p>')
+
+        html = '\n'.join(processed_blocks)
+
+        return html
+
     st.markdown(f"""
     <style>
     .markdown-container {{
-        font-size: 1.05rem;
-        line-height: 1.8;
+        font-family: 'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+        font-size: 15px;
+        line-height: 1.7;
         padding: 2rem;
         border: 2px solid {MANULIFE_GREEN};
         border-radius: 12px;
@@ -471,12 +617,188 @@ elif st.session_state.page == "document":
         height: 68vh;
         overflow-y: auto;
         margin-top: 0.8rem;
+        color: #333;
+    }}
+
+    .markdown-container h1 {{
+        color: {MANULIFE_DARK_GREEN};
+        font-size: 2em;
+        font-weight: 700;
+        margin: 2rem 0 1rem 0;
+        padding-bottom: 0.5rem;
+        border-bottom: 2px solid {MANULIFE_LIGHT_GREEN};
+    }}
+
+    .markdown-container h2 {{
+        color: {MANULIFE_GREEN};
+        font-size: 1.6em;
+        font-weight: 600;
+        margin: 1.8rem 0 0.8rem 0;
+    }}
+
+    .markdown-container h3 {{
+        color: {MANULIFE_GRAY};
+        font-size: 1.3em;
+        font-weight: 600;
+        margin: 1.5rem 0 0.7rem 0;
+    }}
+
+    .markdown-container h4 {{
+        color: {MANULIFE_GRAY};
+        font-size: 1.1em;
+        font-weight: 600;
+        margin: 1.2rem 0 0.6rem 0;
+    }}
+
+    .markdown-container p {{
+        margin: 0.8rem 0;
+        line-height: 1.7;
+    }}
+
+    .markdown-container ul {{
+        margin: 1rem 0;
+        padding-left: 2rem;
+        list-style-type: disc;
+    }}
+
+    .markdown-container ol {{
+        margin: 1rem 0;
+        padding-left: 2rem;
+        list-style-type: decimal;
+    }}
+
+    .markdown-container li {{
+        margin: 0.5rem 0;
+        line-height: 1.6;
+    }}
+
+    .markdown-container ul ul {{
+        list-style-type: circle;
+        margin-top: 0.3rem;
+    }}
+
+    .markdown-container ol ol {{
+        list-style-type: lower-alpha;
+        margin-top: 0.3rem;
+    }}
+
+    .markdown-container table {{
+        border-collapse: collapse;
+        width: 100%;
+        margin: 1.5rem 0;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        font-size: 14px;
+    }}
+
+    .markdown-container thead {{
+        background: linear-gradient(135deg, {MANULIFE_DARK_GREEN}, {MANULIFE_GREEN});
+    }}
+
+    .markdown-container th {{
+        color: white;
+        font-weight: 600;
+        padding: 12px 14px;
+        text-align: left;
+        border: 1px solid {MANULIFE_GREEN};
+    }}
+
+    .markdown-container td {{
+        padding: 10px 14px;
+        border: 1px solid #ddd;
+        text-align: left;
+        vertical-align: top;
+    }}
+
+    .markdown-container tbody tr:nth-child(even) {{
+        background-color: #f9f9f9;
+    }}
+
+    .markdown-container tbody tr:hover {{
+        background-color: {MANULIFE_LIGHT_GREEN};
+        transition: background-color 0.2s ease;
+    }}
+
+    .markdown-container img {{
+        max-width: 100%;
+        height: auto;
+        border-radius: 8px;
+        margin: 1.5rem 0;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        display: block;
+    }}
+
+    .markdown-container code {{
+        background-color: #f5f5f5;
+        padding: 2px 6px;
+        border-radius: 3px;
+        font-family: 'Courier New', 'Monaco', monospace;
+        font-size: 0.9em;
+        color: #d63384;
+    }}
+
+    .markdown-container pre {{
+        background-color: #f5f5f5;
+        padding: 1rem;
+        border-radius: 6px;
+        overflow-x: auto;
+        margin: 1rem 0;
+        border-left: 4px solid {MANULIFE_GREEN};
+    }}
+
+    .markdown-container pre code {{
+        background: none;
+        padding: 0;
+        color: #333;
+        font-size: 0.9em;
+    }}
+
+    .markdown-container a {{
+        color: {MANULIFE_GREEN};
+        text-decoration: none;
+        border-bottom: 1px solid transparent;
+        transition: border-bottom 0.2s ease;
+    }}
+
+    .markdown-container a:hover {{
+        border-bottom: 1px solid {MANULIFE_GREEN};
+    }}
+
+    .markdown-container hr {{
+        border: none;
+        border-top: 2px solid {MANULIFE_LIGHT_GREEN};
+        margin: 2rem 0;
+    }}
+
+    .markdown-container strong {{
+        font-weight: 600;
+        color: {MANULIFE_DARK_GREEN};
+    }}
+
+    .markdown-container em {{
+        font-style: italic;
+    }}
+
+    .markdown-container input[type="checkbox"] {{
+        margin-right: 8px;
+        cursor: default;
+    }}
+
+    .markdown-container blockquote {{
+        border-left: 4px solid {MANULIFE_GREEN};
+        padding-left: 1rem;
+        margin: 1rem 0;
+        color: {MANULIFE_GRAY};
+        font-style: italic;
     }}
     </style>
     """, unsafe_allow_html=True)
 
+    # Convert markdown to HTML
+    html_content = convert_markdown_to_html_complete(st.session_state.markdown)
+
+    # Display using the container
     st.markdown(
-        f"<div class='markdown-container'>{st.session_state.markdown}</div>",
+        f"<div class='markdown-container'>{html_content}</div>",
         unsafe_allow_html=True
     )
 

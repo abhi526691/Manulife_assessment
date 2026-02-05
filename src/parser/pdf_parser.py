@@ -34,12 +34,43 @@ class contractParser:
 
     def replace_images_in_markdown(self, markdown_str: str, images_dict: dict) -> str:
         """
-        Replace image placeholders in markdown with base64-encoded images.
+        Replace image placeholders in markdown with base64-encoded data URIs.
         """
         for img_name, base64_str in images_dict.items():
-            markdown_str = markdown_str.replace(
-                f"![{img_name}]({img_name})", f"![{img_name}]({base64_str})"
-            )
+            try:
+                # Determine image format from the filename
+                ext = img_name.split('.')[-1].lower() if '.' in img_name else 'jpeg'
+                
+                # Map common extensions to MIME types
+                mime_type_map = {
+                    'jpg': 'jpeg',
+                    'jpeg': 'jpeg',
+                    'png': 'png',
+                    'gif': 'gif',
+                    'webp': 'webp',
+                    'bmp': 'bmp',
+                    'svg': 'svg+xml'
+                }
+                mime_type = mime_type_map.get(ext, 'jpeg')
+                
+                # Ensure base64 string doesn't have data URI prefix already
+                if base64_str.startswith('data:'):
+                    data_uri = base64_str
+                else:
+                    # Remove any whitespace/newlines from base64 string
+                    clean_base64 = base64_str.replace('\n', '').replace('\r', '').strip()
+                    data_uri = f"data:image/{mime_type};base64,{clean_base64}"
+                
+                # Replace all occurrences of this image reference
+                # Handle both ![img_name](img_name) and ![alt text](img_name)
+                pattern = rf'!\[([^\]]*)\]\({re.escape(img_name)}\)'
+                replacement = rf'![{img_name}]({data_uri})'
+                markdown_str = re.sub(pattern, replacement, markdown_str)
+                
+            except Exception as e:
+                print(f"Warning: Failed to process image {img_name}: {str(e)}")
+                continue
+        
         return markdown_str
 
     def get_combined_markdown(self, pdf_response: OCRResponse) -> str:
