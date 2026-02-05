@@ -3,7 +3,6 @@ from src.parser.mistral_ocr_convertor import textExtractor
 from src.orchestator.compliance_runner import run_compliance, run_qna, ask_bot
 import streamlit.components.v1 as components
 import html as html_module
-import markdown
 import time
 import re
 
