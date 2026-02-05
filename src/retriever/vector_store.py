@@ -5,6 +5,7 @@ from langchain_community.vectorstores import FAISS
 from langchain_community.embeddings import HuggingFaceEmbeddings
 
 
+
 class vectorStoreRetriever:
 
     def __init__(self, structured_data):

@@ -5,6 +5,7 @@ from mistralai import Mistral, DocumentURLChunk
 from src.parser.pdf_parser import contractParser
 
 
+
 class textExtractor(contractParser):
     def __init__(self, pdf_path):
         super().__init__()

@@ -10,6 +10,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 
+
 class complianceRAGChain(baseOrchestrator):
     def __init__(self, structured_data):
         self.structured_data = structured_data

@@ -199,7 +199,7 @@ Advanced reasoning framework that guides LLM through:
 | Time per Contract              | 2 minutes   | 4-6 hours             |
 | Cost per Contract              | $0.15 (API) | $120 (labor @ $30/hr) |
 | Annual Savings (200 contracts) | -           | $23,970               |
-| ROI                            | -           | 15,980%               |
+| ROI                            | 15,980%     |                       |
 
 ---
 
